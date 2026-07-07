@@ -83,16 +83,17 @@ cat << 'EOF' | tee /etc/motd
 EOF
 
 echo "--------------------------------------------------------"
-echo "Текущие ключи В authorized_keys:"
+echo "Текущие ключи в authorized_keys:"
 if [ -f "/root/.ssh/authorized_keys" ]; then
     cat /root/.ssh/authorized_keys
 else
     echo "(Файл пуст или еще не создан)"
 fi
+
 if [ "$PASSWORD_DISABLED" = true ]; then
     echo "Вход по паролю выключен"
 else
-    echo "Вхож по паролю включен"
+    echo "Вход по паролю включен"
 fi
 echo "--------------------------------------------------------"
 
