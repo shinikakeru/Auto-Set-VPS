@@ -80,21 +80,24 @@ else
 fi
 echo "--------------------------------------------------------"
 
-# 5. Настройка фаервола 
-echo "Настройка фаервола (UFW)..."
+# 5. Настройка фаервола (UFW)
+echo "Настройка фаервола..."
 
-# Установка и подавление вывода
+# Установка и подавление вывода (stderr 2>&1 перенаправляет ошибки в никуда)
+export DEBIAN_FRONTEND=noninteractive
+export NEEDRESTART_MODE=a
+
 if ! command -v ufw > /dev/null; then
-    apt-get update -qq > /dev/null
-    apt-get install -y -qq ufw > /dev/null
+    apt-get update -qq > /dev/null 2>&1
+    apt-get install -y -qq ufw > /dev/null 2>&1
 fi
 
-# Настройка правил
-ufw --force reset > /dev/null
-ufw default deny incoming > /dev/null
-ufw default allow outgoing > /dev/null
-ufw allow 1024/tcp > /dev/null
-ufw --force enable > /dev/null
+# Настройка правил без лишнего шума
+ufw --force reset > /dev/null 2>&1
+ufw default deny incoming > /dev/null 2>&1
+ufw default allow outgoing > /dev/null 2>&1
+ufw allow 1024/tcp > /dev/null 2>&1
+ufw --force enable > /dev/null 2>&1
 
 # Перезапуск SSH
 systemctl restart ssh
