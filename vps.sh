@@ -20,33 +20,37 @@ echo "Начинаем настройку..."
 echo "Меняем порт на 1024..."
 sed -i 's/^#*Port.*/Port 1024/' /etc/ssh/sshd_config
 
-# 2. Добавляем ПУБЛИЧНЫЙ ключ (Enter для пропуска)
+# 2. Добавляем ключ и спрашиваем про пароль
 echo "--------------------------------------------------------"
-echo "ВСТАВЬТЕ ВАШ ПУБЛИЧНЫЙ КЛЮЧ (id_ed25519.pub) ИЛИ НАЖМИТЕ ENTER ДЛЯ ПРОПУСКА:"
+echo "ВСТАВЬТЕ ПУБЛИЧНЫЙ КЛЮЧ (id_ed25519.pub) ИЛИ ENTER ДЛЯ ПРОПУСКА:"
 echo "--------------------------------------------------------"
 read -r USER_SSH_KEY
 
 KEY_ADDED=false
+PASSWORD_DISABLED=false
 
-if [ -n "$USER_SSH_KEY" ]; then
+if [[ -n "$USER_SSH_KEY" ]]; then
     mkdir -p /root/.ssh
     chmod 700 /root/.ssh
-
-    # Проверяем, существует ли уже такая строка в файле
-    if grep -Fxq "$USER_SSH_KEY" /root/.ssh/authorized_keys 2>/dev/null; then
-        printf "\033c"
-	echo "Этот ключ уже есть в authorized_keys, пропускаем."
-	KEY_ADDED=true
-    else
-        echo "$USER_SSH_KEY" >> /root/.ssh/authorized_keys
-	printf "\033c"
-        echo "Ключ успешно добавлен!"
-	KEY_ADDED=true
-    fi
+    echo "$USER_SSH_KEY" >> /root/.ssh/authorized_keys
     chmod 600 /root/.ssh/authorized_keys
+    KEY_ADDED=true
+    printf "\033c"
+    echo "Ключ добавлен!"
+
+    echo "--------------------------------------------------------"
+    echo "ОТКЛЮЧИТЬ ВХОД ПО ПАРОЛЮ? (y/n)"
+    echo "--------------------------------------------------------"
+    read -r DISABLE_PWD
+    if [[ "$DISABLE_PWD" =~ ^[Yy]$ ]]; then
+        sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
+        PASSWORD_DISABLED=true
+    else
+        sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+    fi
 else
     printf "\033c"
-    echo "Ввод ключа пропущен."
+    echo "Ввод ключа пропущен, вход по паролю оставлен."
 fi
 
 # 3. Убираем лишние надписи
@@ -85,6 +89,10 @@ if [ -f "/root/.ssh/authorized_keys" ]; then
 else
     echo "(Файл пуст или еще не создан)"
 fi
+if [ "$PASSWORD_DISABLED" = true ]; then
+    echo "Вход по паролю выключен"
+else
+    echo "Вхож по паролю включен"
 echo "--------------------------------------------------------"
 
 # 5. Настройка фаервола (UFW)
@@ -107,7 +115,11 @@ ufw --force enable > /dev/null 2>&1
 systemctl restart ssh
 
 if [ "$KEY_ADDED" = true ]; then
-    echo "Готово! Ваш публичный ключ добавлен, порт изменен на 1024, баннеры очищены."
+    if [ "$PASSWORD_DISABLED" = true ]; then
+    	echo "Готово! Ваш публичный ключ добавлен, вход по паролю выключен, порт изменен на 1024, баннеры 	очищены."
+    else 
+	echo "Готово! Ваш публичный ключ добавлен, вход по паролю оставлен, порт изменен на 1024, баннеры 	очищены."
+    fi
 else
     echo "Готово! Порт изменен на 1024, баннеры очищены."
 fi
