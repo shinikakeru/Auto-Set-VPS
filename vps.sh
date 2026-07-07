@@ -63,6 +63,15 @@ cat << 'EOF' | tee /etc/motd
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠁⣛⠓⢒⣒⣢⡭⢁⡈⠿⠿⠟⠹⠛⠁⠀⠀⠀⠰⠃⠂⠀⠀⠀
 EOF
 
+if [ -f "/root/.ssh/authorized_keys" ]; then
+    echo "--------------------------------------------------------"
+    echo "ТЕКУЩИЕ КЛЮЧИ В authorized_keys:"
+    cat /root/.ssh/authorized_keys
+    echo "--------------------------------------------------------"
+else
+    echo "Файл authorized_keys еще не создан."
+fi
+
 # 5. Перезапуск
 echo "Настройка фаервола и перезапуск SSH..."
 if command -v ufw > /dev/null; then
