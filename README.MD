@@ -1,5 +1,7 @@
 \# Запуск
 
+
+
 1. Зайти на сервер по ssh от имени \*\*root\*\*
 2. Ввести команду
 3. Все выполнится автоматически
@@ -13,6 +15,8 @@ wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.s
 ```
 
 \## Что делает скрипт
+
+
 
 1. Меняет порт на 1024 для ssh в \*\*/etc/ssh/sshd\_config\*\*
 2. Добавляет SSH ключ в \*\*/root/.ssh/authorized\_keys\*\* \*\*(опционально)\*\*
