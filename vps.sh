@@ -6,10 +6,13 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# 0. Автоматический перезапуск сервисов (убирает вопросы needrestart)
+# 0. Автоматический перезапуск сервисов (убирает вопросы и сканирование)
+export NEEDRESTART_MODE=a
 mkdir -p /etc/needrestart/conf.d
 echo '$nrconf{restart} = "a";' > /etc/needrestart/conf.d/autopilot.conf
 echo '$nrconf{kernelinc} = "no";' >> /etc/needrestart/conf.d/autopilot.conf
+# Полный сброс терминала
+printf "\033c"
 
 echo "Начинаем настройку..."
 
@@ -83,10 +86,7 @@ echo "--------------------------------------------------------"
 # 5. Настройка фаервола (UFW)
 echo "Настройка фаервола..."
 
-# Установка и подавление вывода (stderr 2>&1 перенаправляет ошибки в никуда)
-export DEBIAN_FRONTEND=noninteractive
-export NEEDRESTART_MODE=a
-
+# Установка и подавление любого вывода (stdout и stderr)
 if ! command -v ufw > /dev/null; then
     apt-get update -qq > /dev/null 2>&1
     apt-get install -y -qq ufw > /dev/null 2>&1
