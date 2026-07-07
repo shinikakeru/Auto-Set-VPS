@@ -45,8 +45,14 @@ if [[ -n "$USER_SSH_KEY" ]]; then
     if [[ "$DISABLE_PWD" =~ ^[Yy]$ ]]; then
         sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
         PASSWORD_DISABLED=true
+	echo "--------------------------------------------------------"
+    	echo "Ключ добавлен, вход по паролю отключен."
+    	echo "--------------------------------------------------------"
     else
         sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+	echo "--------------------------------------------------------"
+    	echo "Ключ добавлен, вход по паролю оставлен."
+    	echo "--------------------------------------------------------"
     fi
 else
     printf "\033c"
