@@ -12,9 +12,9 @@ echo "Начинаем настройку..."
 echo "Меняем порт на 1024..."
 sed -i 's/^#*Port.*/Port 1024/' /etc/ssh/sshd_config
 
-# 2. Добавляем ПУБЛИЧНЫЙ ключ интерактивно
+# 2. Добавляем ПУБЛИЧНЫЙ ключ (умная проверка)
 echo "--------------------------------------------------------"
-echo "ПОЖАЛУЙСТА, ВСТАВЬТЕ ВАШ ПУБЛИЧНЫЙ КЛЮЧ (id_ed25519.pub):"
+echo "ПОЖАЛУЙСТА, ВСТАВЬТЕ ВАШ ПУБЛИЧНЫЙ КЛЮЧ:"
 echo "--------------------------------------------------------"
 read -r USER_SSH_KEY
 
@@ -25,10 +25,16 @@ fi
 
 mkdir -p /root/.ssh
 chmod 700 /root/.ssh
-echo "$USER_SSH_KEY" >> /root/.ssh/authorized_keys
-chmod 600 /root/.ssh/authorized_keys
-echo "Ключ успешно добавлен!"
 
+# Проверяем, есть ли уже такой ключ в файле, чтобы не дублировать
+if grep -qF "$USER_SSH_KEY" /root/.ssh/authorized_keys; then
+    echo "Ключ уже добавлен, пропускаем."
+else
+    echo "$USER_SSH_KEY" >> /root/.ssh/authorized_keys
+    echo "Ключ успешно добавлен!"
+fi
+
+chmod 600 /root/.ssh/authorized_keys
 # 3. Убираем лишние надписи
 echo "Очистка баннеров..."
 chmod -x /etc/update-motd.d/*
