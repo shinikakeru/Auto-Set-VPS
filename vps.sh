@@ -67,6 +67,8 @@ echo "--------------------------------------------------------"
 chmod -x /etc/update-motd.d/*
 sed -i 's/^PrintMotd.*/PrintMotd no/' /etc/ssh/sshd_config
 sed -i 's/^PrintLastLog.*/PrintLastLog no/' /etc/ssh/sshd_config
+sleep 2
+printf "\033c"
 
 # 4. Создаем картинку
 cat << 'EOF' | tee /etc/motd
