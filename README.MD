@@ -11,15 +11,15 @@ wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.s
 ```
 
 <p align="center">
-  <img src="example1.png">
+  <img src="example1.jpg">
 </p>
 
 <p align="center">
-  <img src="example2.png">
+  <img src="example2.jpg">
 </p>
 
 <p align="center">
-  <img src="example3.png">
+  <img src="example3.jpg">
 </p>
 
 
