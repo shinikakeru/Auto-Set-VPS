@@ -130,7 +130,7 @@ if [ "$KEY_ADDED" = true ]; then
 		echo "Фаервол включен, порт 1024 открыт"
 		echo "--------------------------------------------------------"
 		echo "Текущие ключи в authorized_keys:"
-	    cat /root/.ssh/authorized_keys
+	    cat /root/.ssh/authorized_keys | sed '/^$/d'
 		echo "--------------------------------------------------------"
     else 
 		echo "Порт изменен на 1024"
@@ -144,7 +144,7 @@ if [ "$KEY_ADDED" = true ]; then
 		echo "Фаервол включен, порт 1024 открыт"
 		echo "--------------------------------------------------------"
 		echo "Текущие ключи в authorized_keys:"
-	    cat /root/.ssh/authorized_keys
+	    cat /root/.ssh/authorized_keys | sed '/^$/d'
 		echo "--------------------------------------------------------"
     fi
 else
@@ -156,7 +156,7 @@ else
     echo "--------------------------------------------------------"
 	echo "Текущие ключи в authorized_keys:"
 	if [ -f "/root/.ssh/authorized_keys" ]; then
-	    cat /root/.ssh/authorized_keys
+	    cat /root/.ssh/authorized_keys | sed '/^$/d'
 	else
 	    echo "(Файл пуст или еще не создан)"
 	fi
