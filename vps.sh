@@ -1,6 +1,45 @@
 #!/bin/bash
 set -e
 # Функции
+# Добавление ключа и вопрос про пароль
+# Функция настройки SSH ключа и пароля
+setup_ssh_access() {
+    echo "--------------------------------------------------------"
+    echo "ВСТАВЬТЕ ПУБЛИЧНЫЙ КЛЮЧ (id_ed25519.pub) ИЛИ ENTER ДЛЯ ПРОПУСКА:"
+    echo "--------------------------------------------------------"
+    read -r USER_SSH_KEY
+
+    KEY_ADDED=false
+    PASSWORD_DISABLED=false
+
+    if [[ -n "$USER_SSH_KEY" ]]; then
+        mkdir -p /root/.ssh
+        chmod 700 /root/.ssh
+        echo "$USER_SSH_KEY" >> /root/.ssh/authorized_keys
+        chmod 600 /root/.ssh/authorized_keys
+        KEY_ADDED=true
+        printf "\033c"
+        echo "Ключ добавлен!"
+
+        echo "--------------------------------------------------------"
+        echo "ОТКЛЮЧИТЬ ВХОД ПО ПАРОЛЮ? (y/n)"
+        echo "--------------------------------------------------------"
+        read -r DISABLE_PWD
+        if [[ "$DISABLE_PWD" =~ ^[Yy]$ ]]; then
+            sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
+            PASSWORD_DISABLED=true
+            echo "Вход по паролю выключен."
+        else
+            sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+            echo "Вход по паролю включен."
+        fi
+    else
+        printf "\033c"
+        echo "Ввод ключа пропущен, вход по паролю включен."
+    fi
+}
+
+# ВЫВОД В КОНЦЕ
 print_summary() {
     echo "--------------------------------------------------------"
     echo "Порт изменен на 1024"
@@ -55,45 +94,7 @@ echo "Меняем порт на 1024..."
 sed -i 's/^#*Port.*/Port 1024/' /etc/ssh/sshd_config
 
 # 2. Добавляем ключ и спрашиваем про пароль
-echo "--------------------------------------------------------"
-echo "ВСТАВЬТЕ ПУБЛИЧНЫЙ КЛЮЧ (id_ed25519.pub) ИЛИ ENTER ДЛЯ ПРОПУСКА:"
-echo "--------------------------------------------------------"
-read -r USER_SSH_KEY
-
-KEY_ADDED=false
-PASSWORD_DISABLED=false
-
-if [[ -n "$USER_SSH_KEY" ]]; then
-    mkdir -p /root/.ssh
-    chmod 700 /root/.ssh
-    echo "$USER_SSH_KEY" >> /root/.ssh/authorized_keys
-    chmod 600 /root/.ssh/authorized_keys
-    KEY_ADDED=true
-    printf "\033c"
-    echo "Ключ добавлен!"
-
-    echo "--------------------------------------------------------"
-    echo "ОТКЛЮЧИТЬ ВХОД ПО ПАРОЛЮ? (y/n)"
-    echo "--------------------------------------------------------"
-    read -r DISABLE_PWD
-    if [[ "$DISABLE_PWD" =~ ^[Yy]$ ]]; then
-        sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
-        PASSWORD_DISABLED=true
-	echo "--------------------------------------------------------"
-    	echo "Ключ добавлен, вход по паролю выключен."
-    	echo "--------------------------------------------------------"
-    else
-        sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
-	echo "--------------------------------------------------------"
-    	echo "Ключ добавлен, вход по паролю включен."
-    	echo "--------------------------------------------------------"
-    fi
-else
-    printf "\033c"
-    echo "--------------------------------------------------------"
-    echo "Ввод ключа пропущен, вход по паролю включен."
-    echo "--------------------------------------------------------"
-fi
+setup_ssh_access
 
 # 3. Убираем лишние надписи
 echo "Очистка баннеров..."
