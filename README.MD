@@ -51,23 +51,10 @@ cat $HOME\.ssh\имя_вашего_ключа.pub
 mkdir $HOME\.ssh
 ```
 **Для bash на VPS**
-1. Установка текстового редактора
 ```bash
-sudo apt install nano
-```
-2. Сохранить в редакторе
-```bash
-Ctrl O + Enter
-```
-3. Выйти из редактора
-```bash
-Ctrl X
-```
-4. Папка с конфигурацией сервера
-```bash
-sudo nano /etc/ssh/sshd_config
-```
-5. Папка с SSH ключами
-```bash
-sudo nano ~/.ssh/authorized_keys
+sudo apt install nano # Установка текстового редактора
+Ctrl O + Enter # Сохранить в редакторе
+Ctrl X # Выйти из редактора
+sudo nano /etc/ssh/sshd_config # Папка с конфигурацией сервера
+sudo nano ~/.ssh/authorized_keys # Папка с SSH ключами
 ```
