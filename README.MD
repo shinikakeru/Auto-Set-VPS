@@ -36,7 +36,7 @@ wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.s
 ### Полезные команды
 **Для powershell**
 
-1. Создаст ключ формата ed25519 с вашим названием по пути C:\Users\Имя_Пользователя\.ssh\
+1. Создаст ключ формата ed25519 с вашим названием по пути `C:\Users\Имя_Пользователя\.ssh\`
 ```powershell
 ssh-keygen -t ed25519 -f $HOME\.ssh\имя_вашего_ключа
 ```
