@@ -7,6 +7,7 @@ wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.s
 ```
 3. Все выполнится автоматически **(Добавить ПУБЛИЧНЫЙ ключ нужно вручную)**
 
+## Изображения работы
 <p align="center">
   <img src="example1.jpg">
 </p>
@@ -20,7 +21,7 @@ wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.s
 </p>
 
 
-## Что делает скрипт
+### Что делает скрипт
 
 1. Меняет порт на 1024 для ssh в **/etc/ssh/sshd\_config**
 2. Добавляет SSH ключ в **/root/.ssh/authorized\_keys** **(опционально)**
@@ -32,7 +33,7 @@ wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.s
 7. Перезапускает службы
 8. Чистит файлы за собой
 
-### Полезные команды
+#### Полезные команды
 **Для powershell**
 
 1. Создаст ключ формата ed25519 с вашим названием по пути `C:\Users\Имя_Пользователя\.ssh\`
