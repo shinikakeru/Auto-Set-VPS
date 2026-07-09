@@ -2,11 +2,10 @@
 
 1. Зайти на сервер по ssh от имени **root**
 2. Ввести команду
-3. Все выполнится автоматически **(Добавить ПУБЛИЧНЫЙ ключ нужно вручную)**
-
 ```bash
 wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.sh?cache=$(date +%s)" > setup.sh && chmod +x setup.sh && sudo ./setup.sh ; rm -f setup.sh
 ```
+3. Все выполнится автоматически **(Добавить ПУБЛИЧНЫЙ ключ нужно вручную)**
 
 <p align="center">
   <img src="example1.jpg">
