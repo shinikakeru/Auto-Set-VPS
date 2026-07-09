@@ -2,12 +2,10 @@
 
 1. Зайти на сервер по ssh от имени **root**
 2. Ввести команду
-3. Все выполнится автоматически **(Добавить ключ нужно вручную)**
+3. Все выполнится автоматически **(Добавить ПУБЛИЧНЫЙ ключ нужно вручную)**
 
 ```bash
-
-wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.sh?cache=$(date +%s)" > setup.sh \&\& chmod +x setup.sh \&\& sudo ./setup.sh ; rm -f setup.sh
-
+wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.sh?cache=$(date +%s)" > setup.sh && chmod +x setup.sh && sudo ./setup.sh ; rm -f setup.sh
 ```
 
 <p align="center">
@@ -34,3 +32,19 @@ wget -qO- "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.s
 6. Вывод текущие ключи на сервере в **/root/.ssh/authorized_keys**
 7. Перезапускает службы
 8. Чистит файлы за собой
+
+### Полезные команды
+Для powershell
+
+1. Создаст ключ формата ed25519 с вашим названием по пути C:\Users\Имя_Пользователя\.ssh\
+```powershell
+ssh-keygen -t ed25519 -f $HOME\.ssh\имя_вашего_ключа
+```
+2. Сразу открыть публичный ключ
+```powershell
+cat $HOME\.ssh\имя_вашего_ключа.pub
+```
+3. Если вы создаете ключ впервые, папки .ssh может еще не существовать. В таком случае команда ssh-keygen может выдать ошибку. Если это произойдет, сначала создайте папку командой:
+```powershell
+mkdir $HOME\.ssh
+```
