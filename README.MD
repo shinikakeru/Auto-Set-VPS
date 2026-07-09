@@ -53,7 +53,7 @@ mkdir $HOME\.ssh
 ```bash
 sudo apt install nano
 ```
-2. Сохранить
+2. Сохранить в редакторе
 ```bash
 Ctrl O + Enter
 ```
