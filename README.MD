@@ -5,7 +5,9 @@
 ```bash
 curl -sL "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.sh?cache=$(date +%s)" > setup.sh && chmod +x setup.sh && sudo ./setup.sh
 ```
-3. Все выполнится автоматически **(Добавить ПУБЛИЧНЫЙ ключ нужно вручную)**
+3. **Добавить ПУБЛИЧНЫЙ ключ**
+4. **Выбрать наличие пароля (только при добавленном ключе)**
+5. Все остальное выполнится автоматически
 
 ## Изображения работы
 <p align="center">
