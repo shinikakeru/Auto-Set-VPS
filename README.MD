@@ -38,7 +38,11 @@ curl -sL "https://raw.githubusercontent.com/shinikakeru/Auto-Set-VPS/main/vps.sh
 ## Полезные команды
 **Для powershell**
 ```powershell
-ssh-keygen -t ed25519 -f $HOME\.ssh\имя_вашего_ключа # Создаст ключ формата ed25519 с вашим названием по пути C:\Users\Имя_Пользователя\.ssh\
+<#
+Создаст ключ формата ed25519 с вашим названием
+по пути C:\Users\Имя_Пользователя\.ssh\
+#>
+ssh-keygen -t ed25519 -f $HOME\.ssh\имя_вашего_ключа
 cat $HOME\.ssh\имя_вашего_ключа.pub # Сразу открыть публичный ключ
 <#
 Если вы создаете ключ впервые,
