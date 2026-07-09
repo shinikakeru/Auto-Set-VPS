@@ -56,9 +56,19 @@ mkdir $HOME\.ssh
 ```
 **Для bash на VPS**
 ```bash
+**Редактор**
 sudo apt install nano # Установка текстового редактора
 Ctrl O + Enter # Сохранить в редакторе
 Ctrl X # Выйти из редактора
+**Папки**
 sudo nano /etc/ssh/sshd_config # Папка с конфигурацией сервера
 sudo nano ~/.ssh/authorized_keys # Папка с SSH ключами
+**Фаервол**
+sudo ufw enable / disable # Включение / Выключение фаервола
+sudo ufw status (numbered опционально) # Фаервол и его порты, вместе с numbered выведет их с числами для удаления
+sudo ufw delete X # Вместо X можно подставить любое число, полученное командой выше, чтобы удалить правило
+sudo ufw allow **(tcp/udp опционально, можно без)** ПОРТ # Открывает порт
+ufw default deny incoming # Запрещает все входящие запросы, **обязательно добавить SSH порт, перед тем как выйти!**
+ufw default allow outgoing # Разрешает все исходящие запросы
+sudo ufw reset # Сбрасывает настройки фаервола
 ```
