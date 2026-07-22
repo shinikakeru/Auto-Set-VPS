@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 # Функции
 # Функция настройки SSH ключа и пароля
 setup_ssh_access() {
